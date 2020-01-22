@@ -3,6 +3,7 @@
 namespace LoxBerryPoppins\Frontend\Routing;
 
 use LoxBerryPoppins\Exception\RouteIsNotPublicException;
+use LoxBerryPoppins\Exception\RouteIsPublicException;
 use LoxBerryPoppins\Exception\RouteNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -67,6 +68,9 @@ class RouteMatcher
         }
         if ($isPublic && !($configuredRoute['public'] ?? false)) {
             throw new RouteIsNotPublicException(sprintf('The requested route was found but is not publicly available.'));
+        }
+        if (!$isPublic && ($configuredRoute['public'] ?? false)) {
+            throw new RouteIsPublicException(sprintf('The requested route was found but is not an admin route.'));
         }
 
         $currentRoute = $this->request->query->get('route', '');

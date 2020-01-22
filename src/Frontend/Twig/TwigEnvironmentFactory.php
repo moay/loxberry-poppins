@@ -61,6 +61,8 @@ class TwigEnvironmentFactory
 
     /**
      * @return \Twig\Environment
+     *
+     * @throws \Twig\Error\LoaderError
      */
     public function __invoke(): Environment
     {
@@ -74,6 +76,7 @@ class TwigEnvironmentFactory
         $logLevel = $this->pluginInformation->getLogLevel();
 
         $loader = new \Twig\Loader\FilesystemLoader($this->rootPath.'/'.trim(self::TWIG_VIEWS_FOLDER, '/'));
+        $loader->addPath(__DIR__.'/../../../views');
         $twig = new \Twig\Environment($loader, [
             'cache' => $this->rootPath.'/'.trim(self::TWIG_CACHE_FOLDER, '/'),
             'debug' => Logger::LOGLEVEL_DEBUG === $logLevel,
