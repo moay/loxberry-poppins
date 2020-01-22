@@ -27,6 +27,6 @@ class NavigationConfigurationParser
      */
     public function getConfiguration(): array
     {
-        return $this->navigationConfiguration;
+        return $this->navigationConfiguration ?? [];
     }
 }

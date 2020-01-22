@@ -61,7 +61,7 @@ class AssetUrlBuilder extends AbstractExtension
             .'/'.ltrim($assetFilePath, '/');
 
         if (!file_exists($realPath)) {
-            throw new \InvalidArgumentException();
+            throw new \InvalidArgumentException(sprintf('Asset file %s not found in assets folder', $assetFilePath));
         }
 
         return sprintf(
