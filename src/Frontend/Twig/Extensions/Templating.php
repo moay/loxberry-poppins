@@ -132,7 +132,7 @@ class Templating extends AbstractExtension
      *
      * @return string
      */
-    public function pageStart(Environment $twig, ?string $pageTitle = null, ?string $navBar = null, bool $hidePanels = false): string
+    public function pageStart(Environment $twig, ?string $pageTitle = null, bool $hidePanels = false): string
     {
         $templateFile = $this->templateDirectory.($hidePanels ? '/pagestart_nopanels.html' : '/pagestart.html');
         $template = $this->systemTemplateLoader->loadTranslatedFile($templateFile, ['HEADER']);
