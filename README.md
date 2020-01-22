@@ -2,6 +2,8 @@
 
 # LoxBerry Poppins - Core
 
+[![Build Status](https://travis-ci.com/moay/loxberry-poppins.svg?branch=master)](https://travis-ci.com/moay/loxberry-poppins)
+
 This package is the core of LoxBerry Poppins. It should be used via 
 [the base plugin](https://github.com/moay/loxberry-poppins-base-plugin), but feel free to use it anywhere
 you like and how you like.
