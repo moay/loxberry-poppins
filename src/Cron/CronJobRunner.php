@@ -109,7 +109,36 @@ class CronJobRunner
             $this->logger->success('Finished execution of CronJob '.get_class($cronJob));
         } catch (\Throwable $exception) {
             $this->logger->error('Error during cron job execution of CronJob '.get_class($cronJob));
-            $this->logger->debug($exception->getTraceAsString());
+            array_map([$this->logger, 'debug'], $this->formatTraceStack($exception));
         }
+    }
+
+    /**
+     * @param \Throwable $exception
+     *
+     * @return array
+     */
+    private function formatTraceStack(\Throwable $exception): array
+    {
+        $stack = [sprintf(
+            '%s - thrown in file "%s" on line %s',
+            $exception->getMessage(),
+            $exception->getFile(),
+            $exception->getLine()
+        ), '', 'Stacktrace:'];
+
+        foreach ($exception->getTrace() as $i => $traceLine) {
+            $stack[] = sprintf(
+                '#%s - %s L%s (%s)',
+                $i,
+                $traceLine['file'],
+                $traceLine['line'],
+                array_key_exists('class', $traceLine) ?
+                    $traceLine['class'].($traceLine['type'] ?? '::').$traceLine['function'] :
+                    'Function '.$traceLine['function']
+            );
+        }
+
+        return $stack;
     }
 }
