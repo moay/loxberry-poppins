@@ -99,11 +99,15 @@ class CronJobRunner
      */
     private function executeCronJob(CronJobInterface $cronJob)
     {
+        if ($cronJob instanceof AbstractCronJob) {
+            $cronJob->setLogger($this->logger);
+        }
+
         try {
             $this->logger->log('Executing CronJob '.get_class($cronJob));
             $cronJob->execute();
             $this->logger->success('Finished execution of CronJob '.get_class($cronJob));
-        } catch (\Exception $exception) {
+        } catch (\Throwable $exception) {
             $this->logger->error('Error during cron job execution of CronJob '.get_class($cronJob));
         }
     }
