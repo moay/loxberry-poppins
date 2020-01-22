@@ -2,6 +2,7 @@
 
 namespace LoxBerryPoppins\Frontend\Routing;
 
+use LoxBerryPoppins\Exception\RouteIsNotPublicException;
 use LoxBerryPoppins\Exception\RouteNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -33,9 +34,9 @@ class RouteMatcher
      *
      * @return PageRouteConfiguration
      */
-    public function getMatchedRoute(bool $isPublic): PageRouteConfiguration
+    public function getMatchedRoute(bool $isPublic = false): PageRouteConfiguration
     {
-        $routes = $this->routes[!$isPublic ? 'admin' : 'public'] ?? [];
+        $routes = $this->routes ?? [];
 
         foreach ($routes as $routeName => $routeConfiguration) {
             if ($this->isCurrentMatchedRoute($routeName, $isPublic)) {
@@ -60,9 +61,12 @@ class RouteMatcher
      */
     public function isCurrentMatchedRoute(string $routeName, bool $isPublic = false): bool
     {
-        $configuredRoute = $this->routes[!$isPublic ? 'admin' : 'public'][$routeName] ?? null;
+        $configuredRoute = $this->routes[$routeName] ?? null;
         if (null === $configuredRoute) {
             return false;
+        }
+        if ($isPublic && !($configuredRoute['public'] ?? false)) {
+            throw new RouteIsNotPublicException(sprintf('The requested route was found but is not publicly available.'));
         }
 
         $currentRoute = $this->request->query->get('route', '');
