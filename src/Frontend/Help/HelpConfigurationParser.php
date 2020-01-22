@@ -9,7 +9,7 @@ use Symfony\Component\Yaml\Yaml;
  */
 class HelpConfigurationParser
 {
-    const HELP_CONFIGURATION = '/config/pagehelp.yaml';
+    const HELP_CONFIGURATION = '/config/help.yaml';
 
     /** @var array */
     private $helpConfiguration;
