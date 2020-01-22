@@ -77,6 +77,7 @@ class Translations extends AbstractExtension
             $this->fallbackSystemTranslations,
         ] as $translations) {
             $translated = $translations->getTranslated($stringToTranslate);
+
             if ($translated !== $stringToTranslate) {
                 return $translated;
             }
