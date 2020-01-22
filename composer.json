@@ -21,7 +21,8 @@
         "twig/twig": "^3.0",
         "filp/whoops": "^2.7",
         "symfony/var-dumper": "^5.0",
-        "ext-json": "*"
+        "ext-json": "*",
+        "phpro/grumphp": "^0.17.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.3",
