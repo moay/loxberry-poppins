@@ -109,6 +109,7 @@ class CronJobRunner
             $this->logger->success('Finished execution of CronJob '.get_class($cronJob));
         } catch (\Throwable $exception) {
             $this->logger->error('Error during cron job execution of CronJob '.get_class($cronJob));
+            $this->logger->debug($exception->getTraceAsString());
         }
     }
 }
