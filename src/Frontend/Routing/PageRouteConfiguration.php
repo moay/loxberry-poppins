@@ -19,6 +19,9 @@ class PageRouteConfiguration
     /** @var string */
     private $route;
 
+    /** @var string */
+    private $routeName;
+
     /**
      * @return string
      */
@@ -81,5 +84,21 @@ class PageRouteConfiguration
     public function setRoute(string $route): void
     {
         $this->route = $route;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRouteName(): string
+    {
+        return $this->routeName;
+    }
+
+    /**
+     * @param string $routeName
+     */
+    public function setRouteName(string $routeName): void
+    {
+        $this->routeName = $routeName;
     }
 }

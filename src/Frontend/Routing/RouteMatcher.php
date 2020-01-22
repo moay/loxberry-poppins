@@ -46,6 +46,7 @@ class RouteMatcher
                 $configuration->setMethod($this->request->getMethod());
                 $configuration->setAction($routeConfiguration['action']);
                 $configuration->setRoute($routeConfiguration['route']);
+                $configuration->setRouteName($routeName);
 
                 return $configuration;
             }

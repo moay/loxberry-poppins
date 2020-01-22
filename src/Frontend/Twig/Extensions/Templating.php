@@ -6,8 +6,10 @@ use LoxBerry\ConfigurationParser\SystemConfigurationParser;
 use LoxBerry\System\Localization\LanguageDeterminator;
 use LoxBerry\System\PathProvider;
 use LoxBerry\System\Paths;
+use LoxBerryPoppins\Frontend\Help\HelpRenderer;
 use LoxBerryPoppins\Frontend\Twig\Utility\NavigationBarBuilder;
 use LoxBerryPoppins\Frontend\Twig\Utility\TranslatedSystemTemplateLoader;
+use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -33,6 +35,8 @@ class Templating extends AbstractExtension
 
     /** @var TranslatedSystemTemplateLoader */
     private $systemTemplateLoader;
+    /** @var HelpRenderer */
+    private $helpRenderer;
 
     /**
      * Templating constructor.
@@ -42,13 +46,15 @@ class Templating extends AbstractExtension
      * @param LanguageDeterminator           $languageDeterminator
      * @param NavigationBarBuilder           $navigationBarBuilder
      * @param TranslatedSystemTemplateLoader $systemTemplateLoader
+     * @param HelpRenderer                   $helpRenderer
      */
     public function __construct(
         PathProvider $pathProvider,
         SystemConfigurationParser $systemConfigurationParser,
         LanguageDeterminator $languageDeterminator,
         NavigationBarBuilder $navigationBarBuilder,
-        TranslatedSystemTemplateLoader $systemTemplateLoader
+        TranslatedSystemTemplateLoader $systemTemplateLoader,
+        HelpRenderer $helpRenderer
     ) {
         $this->pathProvider = $pathProvider;
         $this->templateDirectory = rtrim($this->pathProvider->getPath(Paths::PATH_SYSTEM_TEMPLATE), '/');
@@ -56,6 +62,7 @@ class Templating extends AbstractExtension
         $this->languageDeterminator = $languageDeterminator;
         $this->navigationBarBuilder = $navigationBarBuilder;
         $this->systemTemplateLoader = $systemTemplateLoader;
+        $this->helpRenderer = $helpRenderer;
     }
 
     /**
@@ -77,7 +84,7 @@ class Templating extends AbstractExtension
             new TwigFunction(
                 'loxBerryPageStart',
                 [$this, 'pageStart'],
-                ['is_safe' => ['html']]
+                ['is_safe' => ['html'], 'needs_environment' => true]
             ),
             new TwigFunction(
                 'loxBerryPageEnd',
@@ -125,19 +132,25 @@ class Templating extends AbstractExtension
      *
      * @return string
      */
-    public function pageStart(?string $pageTitle = null, ?string $navBar = null, bool $hidePanels = false): string
+    public function pageStart(Environment $twig, ?string $pageTitle = null, ?string $navBar = null, bool $hidePanels = false): string
     {
         $templateFile = $this->templateDirectory.($hidePanels ? '/pagestart_nopanels.html' : '/pagestart.html');
         $template = $this->systemTemplateLoader->loadTranslatedFile($templateFile, ['HEADER']);
-
-        return $this->replaceVariables($template, [
+        $variables = [
             'TEMPLATETITLE' => $this->getPrintedPageTitle($pageTitle),
-            'HELPLINK' => 'https://google.com',
+            'HELPLINK' => $this->helpRenderer->getHelpUrl(),
             'PAGE' => 'test',
             'LANG' => $this->languageDeterminator->getLanguage(),
             'TOPNAVBAR' => $this->navigationBarBuilder->getNavigationBarHtml(),
             'NAVBARJS' => '',
-        ]);
+        ];
+        $helpContents = $this->helpRenderer->getHelpContents($twig);
+
+        if (null !== $helpContents) {
+            $variables['HELPTEXT'] = $helpContents;
+        }
+
+        return $this->replaceVariables($template, $variables);
     }
 
     /**
