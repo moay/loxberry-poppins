@@ -55,7 +55,7 @@ class CronJobRunner
      * @param iterable $cronJobs
      * @param Logger   $cronLogger
      */
-    public function __construct(iterable $cronJobs, $cronLogger)
+    public function __construct(iterable $cronJobs, Logger $cronLogger)
     {
         foreach ($cronJobs as $cronJob) {
             if (!$cronJob instanceof CronJobInterface) {
