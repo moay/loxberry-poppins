@@ -7,7 +7,8 @@ use LoxBerry\Logging\Logger;
 use LoxBerry\System\LowLevelExecutor;
 use LoxBerry\System\PathProvider;
 use LoxBerry\System\Plugin\PluginDatabase;
-use LoxBerryPoppins\DependencyInjection\PluginParameterLoader;
+use LoxBerryPoppins\DependencyInjection\Extension\ServiceDefinitionDefaultsExtension;
+use LoxBerryPoppins\DependencyInjection\Loader\PluginParameterLoader;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -18,10 +19,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 class PluginKernel
 {
     const CONFIG_DIRECTORY = '/config';
-    const LIBRARY_CONFIG_DIRECTORY = __DIR__.'/../config';
     const ORIGINAL_PLUGIN_CONFIGURATION = '/config/plugin.cfg';
-    const DEFAULT_INJECTIONS_CONFIGURATION = 'injections_default.yaml';
-    const DEFAULT_SERVICES_CONFIGURATION = 'services_default.yaml';
     const PLUGIN_SERVICES_CONFIGURATION = 'services.yaml';
 
     /** @var ContainerBuilder */
@@ -52,13 +50,10 @@ class PluginKernel
         );
         $pluginParameterLoader->loadPluginParameters($containerBuilder);
 
-        $defaultsLoader = new YamlFileLoader($containerBuilder, new FileLocator(self::LIBRARY_CONFIG_DIRECTORY));
-        $defaultsLoader->load(self::DEFAULT_SERVICES_CONFIGURATION);
+        $containerBuilder->registerExtension(new ServiceDefinitionDefaultsExtension());
 
         $pluginLoader = new YamlFileLoader($containerBuilder, new FileLocator($this->pluginRootDirectory.self::CONFIG_DIRECTORY));
         $pluginLoader->load(self::PLUGIN_SERVICES_CONFIGURATION);
-
-        $defaultsLoader->load(self::DEFAULT_INJECTIONS_CONFIGURATION);
 
         $containerBuilder->compile();
 

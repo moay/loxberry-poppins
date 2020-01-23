@@ -4,8 +4,9 @@ services:
     autoconfigure: true
     public: false
     bind:
-      $packageDirectory: '%plugin.directory%'
-      $packageName: '%plugin.name%'
+      $pluginDirectory: '%plugin.directory%'
+      $pluginName: '%plugin.name%'
+      $pluginVersion: '%plugin.version%'
       $cronLogger: '@logger.cron'
       $rootPath: '%runtime.root_dir%'
 
@@ -37,3 +38,16 @@ services:
   logger.cron:
     class: 'LoxBerry\Logging\Logger'
     factory: '@LoxBerryPoppins\Cron\CronLoggerFactory'
+
+  LoxBerryPoppins\Cron\CronJobRunner:
+    public: true
+    arguments:
+      $cronJobs: !tagged plugin.cron_job
+
+  LoxBerryPoppins\Frontend\Routing\ControllerExecutor:
+    arguments:
+      $controllers: !tagged plugin.controller
+
+  LoxBerryPoppins\Frontend\Twig\TwigEnvironmentFactory:
+    arguments:
+      $extensions: !tagged twig.extension

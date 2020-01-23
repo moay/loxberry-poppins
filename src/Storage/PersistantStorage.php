@@ -24,12 +24,12 @@ class PersistantStorage
      * PersistantStorage constructor.
      *
      * @param PathProvider $pathProvider
-     * @param $packageName
+     * @param $pluginName
      */
-    public function __construct(PluginPathProvider $pathProvider, $packageName)
+    public function __construct(PluginPathProvider $pathProvider, $pluginName)
     {
         $this->pathProvider = $pathProvider;
-        $this->pathProvider->setPluginName($packageName);
+        $this->pathProvider->setPluginName($pluginName);
     }
 
     /**

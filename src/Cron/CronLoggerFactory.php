@@ -17,7 +17,7 @@ class CronLoggerFactory
     private $loggerFactory;
 
     /** @var string */
-    private $packageName;
+    private $pluginName;
 
     /** @var PluginPathProvider */
     private $pathProvider;
@@ -27,17 +27,17 @@ class CronLoggerFactory
      *
      * @param LoggerFactory      $loggerFactory
      * @param PluginPathProvider $pathProvider
-     * @param $packageName
+     * @param $pluginName
      */
     public function __construct(
         LoggerFactory $loggerFactory,
         PluginPathProvider $pathProvider,
-        $packageName
+        $pluginName
     ) {
         $this->loggerFactory = $loggerFactory;
-        $this->packageName = $packageName;
+        $this->pluginName = $pluginName;
         $this->pathProvider = $pathProvider;
-        $this->pathProvider->setPluginName($packageName);
+        $this->pathProvider->setPluginName($pluginName);
     }
 
     /**
@@ -49,7 +49,7 @@ class CronLoggerFactory
 
         return $this->loggerFactory->__invoke(
             self::LOG_NAME,
-            $this->packageName,
+            $this->pluginName,
             $logFileDirectory.'/'.date('Ymd-His_').'cron.log'
         );
     }

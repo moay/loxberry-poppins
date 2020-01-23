@@ -24,7 +24,7 @@ class PageRouter implements PageRouterInterface
     private $routeMatcher;
 
     /** @var string */
-    private $packageDirectory;
+    private $pluginDirectory;
 
     /**
      * PageRouter constructor.
@@ -32,18 +32,18 @@ class PageRouter implements PageRouterInterface
      * @param ControllerExecutor $controllerExecutor
      * @param Environment        $twig
      * @param RouteMatcher       $routeMatcher
-     * @param string             $packageDirectory
+     * @param string             $pluginDirectory
      */
     public function __construct(
         ControllerExecutor $controllerExecutor,
         Environment $twig,
         RouteMatcher $routeMatcher,
-        $packageDirectory
+        $pluginDirectory
     ) {
         $this->controllerExecutor = $controllerExecutor;
         $this->twig = $twig;
         $this->routeMatcher = $routeMatcher;
-        $this->packageDirectory = $packageDirectory;
+        $this->pluginDirectory = $pluginDirectory;
     }
 
     /**
@@ -64,19 +64,19 @@ class PageRouter implements PageRouterInterface
             $response = new Response($this->twig->render('error/baseError.html.twig', [
                 'title' => 'Page not found',
                 'errorMessage' => 'The page you requested was not found',
-                'packageDirectory' => $this->packageDirectory,
+                'pluginDirectory' => $this->pluginDirectory,
             ]), Response::HTTP_NOT_FOUND);
         } catch (RouteIsNotPublicException $exception) {
             $response = new Response($this->twig->render('error/baseError.html.twig', [
                 'title' => 'Request not permitted',
                 'errorMessage' => 'The page you requested requires authentication',
-                'packageDirectory' => $this->packageDirectory,
+                'pluginDirectory' => $this->pluginDirectory,
             ]), Response::HTTP_FORBIDDEN);
         } catch (RouteIsPublicException $exception) {
             $response = new Response($this->twig->render('error/baseError.html.twig', [
                 'title' => 'Request not permitted',
                 'errorMessage' => 'The page you requested requires a call via public url',
-                'packageDirectory' => $this->packageDirectory,
+                'pluginDirectory' => $this->pluginDirectory,
             ]), Response::HTTP_FORBIDDEN);
         }
 

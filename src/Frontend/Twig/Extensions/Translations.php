@@ -29,16 +29,16 @@ class Translations extends AbstractExtension
      * Translations constructor.
      *
      * @param TranslationProvider $translationProvider
-     * @param $packageName
+     * @param $pluginName
      */
-    public function __construct(TranslationProvider $translationProvider, $packageName)
+    public function __construct(TranslationProvider $translationProvider, $pluginName)
     {
         $fallbackLanguage = TranslationProvider::FALLBACK_LANGUAGE;
 
         $this->systemTranslations = $translationProvider->getSystemTranslations();
         $this->fallbackSystemTranslations = $translationProvider->getSystemTranslations(null, $fallbackLanguage);
-        $this->pluginTranslations = $translationProvider->getPluginTranslations($packageName);
-        $this->fallbackPluginTranslations = $translationProvider->getPluginTranslations($packageName, null, $fallbackLanguage);
+        $this->pluginTranslations = $translationProvider->getPluginTranslations($pluginName);
+        $this->fallbackPluginTranslations = $translationProvider->getPluginTranslations($pluginName, null, $fallbackLanguage);
     }
 
     /**

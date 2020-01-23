@@ -1,6 +1,6 @@
 <?php
 
-namespace LoxBerryPoppins\DependencyInjection;
+namespace LoxBerryPoppins\DependencyInjection\Loader;
 
 use LoxBerry\ConfigurationParser\ConfigurationParser;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

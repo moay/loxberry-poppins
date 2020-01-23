@@ -37,19 +37,19 @@ class TwigEnvironmentFactory
      *
      * @param AbstractExtension[] $extensions
      * @param string              $rootPath
-     * @param $packageName
+     * @param $pluginName
      * @param PluginDatabase        $pluginDatabase
      * @param MiniserverInformation $miniserverInformation
      */
     public function __construct(
         iterable $extensions,
         string $rootPath,
-        $packageName,
+        $pluginName,
         PluginDatabase $pluginDatabase,
         MiniserverInformation $miniserverInformation
     ) {
         $this->rootPath = $rootPath;
-        $this->pluginInformation = $pluginDatabase->getPluginInformation($packageName);
+        $this->pluginInformation = $pluginDatabase->getPluginInformation($pluginName);
         $this->miniserverInformation = $miniserverInformation;
         foreach ($extensions as $extension) {
             if (!$extension instanceof AbstractExtension) {

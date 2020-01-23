@@ -13,7 +13,7 @@ class UrlBuilder
     const PUBLIC_BASE_URL = 'plugins';
 
     /** @var string */
-    private $packageDirectory;
+    private $pluginDirectory;
 
     /** @var array */
     private $routes;
@@ -22,12 +22,12 @@ class UrlBuilder
      * UrlBuilder constructor.
      *
      * @param RoutingConfigurationParser $routingConfigurationParser
-     * @param string                     $packageDirectory
+     * @param string                     $pluginDirectory
      */
-    public function __construct(RoutingConfigurationParser $routingConfigurationParser, $packageDirectory)
+    public function __construct(RoutingConfigurationParser $routingConfigurationParser, $pluginDirectory)
     {
         $this->routes = $routingConfigurationParser->getConfiguration();
-        $this->packageDirectory = $packageDirectory;
+        $this->pluginDirectory = $pluginDirectory;
     }
 
     /**
@@ -73,7 +73,7 @@ class UrlBuilder
         return sprintf(
             '/%s/%s/%s',
             trim($isPublic ? self::PUBLIC_BASE_URL : self::ADMIN_BASE_URL, '/'),
-            trim($this->packageDirectory, '/'),
+            trim($this->pluginDirectory, '/'),
             trim($route, '/')
         );
     }

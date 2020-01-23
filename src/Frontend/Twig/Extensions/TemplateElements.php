@@ -23,7 +23,7 @@ class TemplateElements extends AbstractExtension
     private $templateDirectory;
 
     /** @var string */
-    private $packageName;
+    private $pluginName;
 
     /** @var SystemConfigurationParser */
     private $systemConfiguration;
@@ -41,20 +41,20 @@ class TemplateElements extends AbstractExtension
      * @param SystemConfigurationParser $systemConfiguration
      * @param PluginDatabase            $pluginDatabase
      * @param Translations              $translations
-     * @param string                    $packageName
+     * @param string                    $pluginName
      */
     public function __construct(
         PathProvider $pathProvider,
         SystemConfigurationParser $systemConfiguration,
         PluginDatabase $pluginDatabase,
         Translations $translations,
-        $packageName
+        $pluginName
     ) {
         $this->pathProvider = $pathProvider;
         $this->templateDirectory = rtrim($this->pathProvider->getPath(Paths::PATH_SYSTEM_TEMPLATE), '/');
-        $this->packageName = $packageName;
+        $this->pluginName = $pluginName;
         $this->systemConfiguration = $systemConfiguration;
-        $this->pluginInformation = $pluginDatabase->getPluginInformation($packageName);
+        $this->pluginInformation = $pluginDatabase->getPluginInformation($pluginName);
         $this->translations = $translations;
     }
 
@@ -110,7 +110,7 @@ class TemplateElements extends AbstractExtension
         return sprintf(
             '<a data-role="button" href="/admin/system/tools/logfile.cgi?name=%s&package=%s&header=html&format=template" target="_blank" data-inline="true" data-mini="%s" data-icon="%s">%s</a>',
             $logGroup,
-            $this->packageName,
+            $this->pluginName,
             $mini ? 'true' : 'false',
             $icon,
             $this->translations->translate($label ?? 'COMMON.BUTTON_LOGFILE')
@@ -126,7 +126,7 @@ class TemplateElements extends AbstractExtension
     {
         return sprintf(
             '/admin/system/logmanager.cgi?package=%s&name=%s',
-            $this->packageName,
+            $this->pluginName,
             $logGroup
         );
     }
