@@ -18,8 +18,10 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 class PluginKernel
 {
     const CONFIG_DIRECTORY = '/config';
+    const LIBRARY_CONFIG_DIRECTORY = __DIR__.'/../config';
     const ORIGINAL_PLUGIN_CONFIGURATION = '/config/plugin.cfg';
-    const DEFAULT_SERVICES_CONFIGURATION = 'services.yaml';
+    const DEFAULT_SERVICES_CONFIGURATION = 'services_default.yaml';
+    const PLUGIN_SERVICES_CONFIGURATION = 'services.yaml';
 
     /** @var ContainerBuilder */
     private $container;
@@ -49,8 +51,11 @@ class PluginKernel
         );
         $pluginParameterLoader->loadPluginParameters($containerBuilder);
 
-        $yamlLoader = new YamlFileLoader($containerBuilder, new FileLocator($this->pluginRootDirectory.self::CONFIG_DIRECTORY));
-        $yamlLoader->load(self::DEFAULT_SERVICES_CONFIGURATION);
+        $defaultsLoader = new YamlFileLoader($containerBuilder, new FileLocator(self::LIBRARY_CONFIG_DIRECTORY));
+        $defaultsLoader->load(self::DEFAULT_SERVICES_CONFIGURATION);
+
+        $pluginLoader = new YamlFileLoader($containerBuilder, new FileLocator($this->pluginRootDirectory.self::CONFIG_DIRECTORY));
+        $pluginLoader->load(self::PLUGIN_SERVICES_CONFIGURATION);
 
         $containerBuilder->compile();
 
