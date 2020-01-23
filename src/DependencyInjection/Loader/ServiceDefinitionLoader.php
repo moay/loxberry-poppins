@@ -67,7 +67,21 @@ class ServiceDefinitionLoader
             ->setPublic(true)
             ->setAutowired(true)
             ->setAutoconfigured(true)
-            ->setArgument('$cronLogger', new Reference('logger.cron'));
+            ->setArgument('$cronLogger', new Reference('logger.cron'))
+            ->setArgument('$cronJobs', $this->getReferencesByTag('plugin.cron_job'));
         $containerBuilder->setDefinition(CronJobRunner::class, $definition);
+    }
+
+    /**
+     * @param string           $tagName
+     * @param ContainerBuilder $containerBuilder
+     *
+     * @return array
+     */
+    private function getReferencesByTag(string $tagName, ContainerBuilder $containerBuilder)
+    {
+        return array_map(function ($serviceId) {
+            return new Reference($serviceId);
+        }, $containerBuilder->findTaggedServiceIds($tagName));
     }
 }
