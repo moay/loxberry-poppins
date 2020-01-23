@@ -57,7 +57,7 @@ class ServiceDefinitionLoader
         $definition = (new Definition())
             ->setPublic(true)
             ->setArgument('$cronJobs', $containerBuilder->findTaggedServiceIds('plugin.cron_job'))
-            ->setArgument('$cronLogger', $containerBuilder->get('logger.cron'));
+            ->setArgument('$cronLogger', new Reference('logger.cron'));
         $containerBuilder->setDefinition(CronJobRunner::class, $definition);
 
         $definition = (new Definition())
