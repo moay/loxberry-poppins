@@ -45,12 +45,12 @@ class ServiceDefinitionLoader
 
         $definition = (new Definition())
             ->setClass(Environment::class)
-            ->setFactory('@'.TwigEnvironmentFactory::class);
+            ->setFactory($containerBuilder->get(TwigEnvironmentFactory::class));
         $containerBuilder->setDefinition(Environment::class, $definition);
 
         $definition = (new Definition())
             ->setClass(Logger::class)
-            ->setFactory('@'.CronLoggerFactory::class);
+            ->setFactory($containerBuilder->get(CronLoggerFactory::class));
         $containerBuilder->setDefinition('logger.cron', $definition);
 
         $definition = (new Definition())
