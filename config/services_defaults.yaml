@@ -7,12 +7,6 @@ services:
     Twig\Extension\AbstractExtension:
       tags: ['twig.extension']
 
-  LoxBerryPoppins\:
-    resource: '../vendor/moay/loxberry-poppins/src/*'
-
-  LoxBerry\:
-    resource: '../vendor/moay/loxberry-core/src/*'
-
   LoxBerryPoppins\Cron\CronJobRunner:
     public: true
     arguments:
