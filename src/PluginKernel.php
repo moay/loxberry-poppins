@@ -47,9 +47,9 @@ class PluginKernel
     private function loadContainer()
     {
         $containerBuilder = new ContainerBuilder();
-        $containerBuilder->addCompilerPass(new ServiceTaggerCompilerPass());
-        $containerBuilder->addCompilerPass(new PluginParameterAutoBinderCompilerPass(), PassConfig::TYPE_OPTIMIZE);
-        $containerBuilder->addCompilerPass(new TagAutoBinderCompilerPass(), PassConfig::TYPE_OPTIMIZE);
+//        $containerBuilder->addCompilerPass(new ServiceTaggerCompilerPass());
+//        $containerBuilder->addCompilerPass(new PluginParameterAutoBinderCompilerPass(), PassConfig::TYPE_OPTIMIZE);
+//        $containerBuilder->addCompilerPass(new TagAutoBinderCompilerPass(), PassConfig::TYPE_OPTIMIZE);
 
         $pluginParameterLoader = new PluginParameterLoader(
             $this->pluginRootDirectory.self::ORIGINAL_PLUGIN_CONFIGURATION,
@@ -60,8 +60,8 @@ class PluginKernel
         $pluginLoader = new YamlFileLoader($containerBuilder, new FileLocator($this->pluginRootDirectory.self::CONFIG_DIRECTORY));
         $pluginLoader->load(self::PLUGIN_SERVICES_CONFIGURATION);
 
-        $serviceDefinitionLoader = new ServiceDefinitionLoader($this->pluginRootDirectory);
-        $serviceDefinitionLoader->registerServiceDefinitions($containerBuilder);
+//        $serviceDefinitionLoader = new ServiceDefinitionLoader($this->pluginRootDirectory);
+//        $serviceDefinitionLoader->registerServiceDefinitions($containerBuilder);
 
         $containerBuilder->compile();
 

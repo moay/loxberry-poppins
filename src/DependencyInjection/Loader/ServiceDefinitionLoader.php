@@ -68,7 +68,7 @@ class ServiceDefinitionLoader
             ->setAutowired(true)
             ->setAutoconfigured(true)
             ->setArgument('$cronLogger', new Reference('logger.cron'))
-            ->setArgument('$cronJobs', $this->getReferencesByTag('plugin.cron_job'));
+            ->setArgument('$cronJobs', $this->getReferencesByTag('plugin.cron_job', $containerBuilder));
         $containerBuilder->setDefinition(CronJobRunner::class, $definition);
     }
 
