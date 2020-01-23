@@ -10,6 +10,7 @@ use LoxBerry\System\Plugin\PluginDatabase;
 use LoxBerryPoppins\DependencyInjection\Extension\ServiceDefinitionDefaultsExtension;
 use LoxBerryPoppins\DependencyInjection\Loader\PluginParameterLoader;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Compiler\MergeExtensionConfigurationPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
@@ -43,6 +44,7 @@ class PluginKernel
     private function loadContainer()
     {
         $containerBuilder = new ContainerBuilder();
+        $containerBuilder->addCompilerPass(new MergeExtensionConfigurationPass());
 
         $pluginParameterLoader = new PluginParameterLoader(
             $this->pluginRootDirectory.self::ORIGINAL_PLUGIN_CONFIGURATION,
