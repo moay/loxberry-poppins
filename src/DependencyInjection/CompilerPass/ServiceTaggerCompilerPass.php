@@ -13,20 +13,22 @@ use Twig\Extension\AbstractExtension;
  */
 class ServiceTaggerCompilerPass implements CompilerPassInterface
 {
+    const CLASS_TAG_MAP = [
+        CronJobInterface::class => 'plugin.cron_job',
+        AbstractController::class => 'plugin.controller',
+        AbstractExtension::class => 'twig.extension',
+    ];
+
     /**
      * @param ContainerBuilder $container
      */
     public function process(ContainerBuilder $container)
     {
         foreach ($container->getDefinitions() as $definition) {
-            if (is_subclass_of($definition->getClass(), CronJobInterface::class)) {
-                $definition->addTag('plugin.cron_job');
-            }
-            if (is_subclass_of($definition->getClass(), AbstractController::class)) {
-                $definition->addTag('plugin.controller');
-            }
-            if (is_subclass_of($definition->getClass(), AbstractExtension::class)) {
-                $definition->addTag('twig.extension');
+            foreach (self::CLASS_TAG_MAP as $className => $tag) {
+                if (is_subclass_of($definition->getClass(), $className)) {
+                    $definition->addTag($tag);
+                }
             }
         }
     }

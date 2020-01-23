@@ -34,6 +34,9 @@ class ServiceDefinitionLoader
         $this->pluginRootDirectory = $pluginRootDirectory;
     }
 
+    /**
+     * @param ContainerBuilder $containerBuilder
+     */
     public function registerServiceDefinitions(ContainerBuilder $containerBuilder)
     {
         $definition = $containerBuilder->getDefinition(PageRouter::class);
