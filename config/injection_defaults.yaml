@@ -1,0 +1,13 @@
+services:
+  LoxBerryPoppins\Cron\CronJobRunner:
+    public: true
+    arguments:
+      $cronJobs: !tagged plugin.cron_job
+
+  LoxBerryPoppins\Frontend\Routing\ControllerExecutor:
+    arguments:
+      $controllers: !tagged plugin.controller
+
+  LoxBerryPoppins\Frontend\Twig\TwigEnvironmentFactory:
+    arguments:
+      $extensions: !tagged twig.extension

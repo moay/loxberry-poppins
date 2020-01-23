@@ -20,6 +20,7 @@ class PluginKernel
     const CONFIG_DIRECTORY = '/config';
     const LIBRARY_CONFIG_DIRECTORY = __DIR__.'/../config';
     const ORIGINAL_PLUGIN_CONFIGURATION = '/config/plugin.cfg';
+    const DEFAULT_INJECTIONS_CONFIGURATION = 'injections_default.yaml';
     const DEFAULT_SERVICES_CONFIGURATION = 'services_default.yaml';
     const PLUGIN_SERVICES_CONFIGURATION = 'services.yaml';
 
@@ -56,6 +57,8 @@ class PluginKernel
 
         $pluginLoader = new YamlFileLoader($containerBuilder, new FileLocator($this->pluginRootDirectory.self::CONFIG_DIRECTORY));
         $pluginLoader->load(self::PLUGIN_SERVICES_CONFIGURATION);
+
+        $defaultsLoader->load(self::DEFAULT_INJECTIONS_CONFIGURATION);
 
         $containerBuilder->compile();
 

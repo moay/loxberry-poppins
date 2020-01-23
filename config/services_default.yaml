@@ -13,7 +13,7 @@ services:
     LoxBerryPoppins\Cron\CronJobInterface:
       tags: ['plugin.cron_job']
     LoxBerryPoppins\Frontend\AbstractController:
-      tags: ['plugin.controller', 'controller.service_arguments']
+      tags: ['plugin.controller']
     Twig\Extension\AbstractExtension:
       tags: ['twig.extension']
 
@@ -23,25 +23,12 @@ services:
   LoxBerry\:
     resource: '../../loxberry-core/src/*'
 
-  LoxBerryPoppins\Cron\CronJobRunner:
-    public: true
-    arguments:
-      $cronJobs: !tagged plugin.cron_job
-
   LoxBerryPoppins\Frontend\Routing\PageRouterInterface:
     class: LoxBerryPoppins\Frontend\Routing\PageRouter
     public: true
 
-  LoxBerryPoppins\Frontend\Routing\ControllerExecutor:
-    arguments:
-      $controllers: !tagged plugin.controller
-
   LoxBerry\Logging\Database\LogFileDatabase:
     factory: '@LoxBerry\Logging\Database\LogFileDatabaseFactory'
-
-  LoxBerryPoppins\Frontend\Twig\TwigEnvironmentFactory:
-    arguments:
-      $extensions: !tagged twig.extension
 
   Twig\Environment:
     class: 'Twig\Environment'
