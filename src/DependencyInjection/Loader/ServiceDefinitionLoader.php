@@ -13,6 +13,7 @@ use LoxBerryPoppins\Frontend\Routing\PageRouterInterface;
 use LoxBerryPoppins\Frontend\Twig\TwigEnvironmentFactory;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 use Twig\Environment;
 
 /**
@@ -40,17 +41,17 @@ class ServiceDefinitionLoader
         $containerBuilder->setDefinition(PageRouterInterface::class, $definition);
 
         $definition = (new Definition())
-            ->setFactory('@'.LogFileDatabaseFactory::class);
+            ->setFactory(new Reference(LogFileDatabaseFactory::class));
         $containerBuilder->setDefinition(LogFileDatabase::class, $definition);
 
         $definition = (new Definition())
             ->setClass(Environment::class)
-            ->setFactory($containerBuilder->get(TwigEnvironmentFactory::class));
+            ->setFactory(new Reference(TwigEnvironmentFactory::class));
         $containerBuilder->setDefinition(Environment::class, $definition);
 
         $definition = (new Definition())
             ->setClass(Logger::class)
-            ->setFactory($containerBuilder->get(CronLoggerFactory::class));
+            ->setFactory(new Reference(CronLoggerFactory::class));
         $containerBuilder->setDefinition('logger.cron', $definition);
 
         $definition = (new Definition())
