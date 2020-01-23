@@ -41,17 +41,17 @@ class ServiceDefinitionLoader
         $containerBuilder->setDefinition(PageRouterInterface::class, $definition);
 
         $definition = (new Definition())
-            ->setFactory(new Reference(LogFileDatabaseFactory::class));
+            ->setFactory([new Reference(LogFileDatabaseFactory::class)]);
         $containerBuilder->setDefinition(LogFileDatabase::class, $definition);
 
         $definition = (new Definition())
             ->setClass(Environment::class)
-            ->setFactory(new Reference(TwigEnvironmentFactory::class));
+            ->setFactory([new Reference(TwigEnvironmentFactory::class)]);
         $containerBuilder->setDefinition(Environment::class, $definition);
 
         $definition = (new Definition())
             ->setClass(Logger::class)
-            ->setFactory(new Reference(CronLoggerFactory::class));
+            ->setFactory([new Reference(CronLoggerFactory::class)]);
         $containerBuilder->setDefinition('logger.cron', $definition);
 
         $definition = (new Definition())
