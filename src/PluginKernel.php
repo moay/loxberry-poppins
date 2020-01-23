@@ -9,9 +9,11 @@ use LoxBerry\System\PathProvider;
 use LoxBerry\System\Plugin\PluginDatabase;
 use LoxBerryPoppins\DependencyInjection\CompilerPass\PluginParameterAutoBinderCompilerPass;
 use LoxBerryPoppins\DependencyInjection\CompilerPass\ServiceTaggerCompilerPass;
+use LoxBerryPoppins\DependencyInjection\CompilerPass\TagAutoBinderCompilerPass;
 use LoxBerryPoppins\DependencyInjection\Loader\PluginParameterLoader;
 use LoxBerryPoppins\DependencyInjection\Loader\ServiceDefinitionLoader;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
@@ -46,7 +48,8 @@ class PluginKernel
     {
         $containerBuilder = new ContainerBuilder();
         $containerBuilder->addCompilerPass(new ServiceTaggerCompilerPass());
-        $containerBuilder->addCompilerPass(new PluginParameterAutoBinderCompilerPass());
+        $containerBuilder->addCompilerPass(new PluginParameterAutoBinderCompilerPass(), PassConfig::TYPE_OPTIMIZE);
+        $containerBuilder->addCompilerPass(new TagAutoBinderCompilerPass(), PassConfig::TYPE_OPTIMIZE);
 
         $pluginParameterLoader = new PluginParameterLoader(
             $this->pluginRootDirectory.self::ORIGINAL_PLUGIN_CONFIGURATION,

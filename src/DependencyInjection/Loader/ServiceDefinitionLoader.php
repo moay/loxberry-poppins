@@ -7,7 +7,6 @@ use LoxBerry\Logging\Database\LogFileDatabaseFactory;
 use LoxBerry\Logging\Logger;
 use LoxBerryPoppins\Cron\CronJobRunner;
 use LoxBerryPoppins\Cron\CronLoggerFactory;
-use LoxBerryPoppins\Frontend\Routing\ControllerExecutor;
 use LoxBerryPoppins\Frontend\Routing\PageRouter;
 use LoxBerryPoppins\Frontend\Routing\PageRouterInterface;
 use LoxBerryPoppins\Frontend\Twig\TwigEnvironmentFactory;
@@ -42,6 +41,7 @@ class ServiceDefinitionLoader
         $definition = $containerBuilder->getDefinition(PageRouter::class);
         $definition->setPublic(true);
         $containerBuilder->setDefinition(PageRouterInterface::class, $definition);
+
         $definition = (new Definition())
             ->setFactory([new Reference(LogFileDatabaseFactory::class)]);
         $containerBuilder->setDefinition(LogFileDatabase::class, $definition);
@@ -58,31 +58,8 @@ class ServiceDefinitionLoader
 
         $definition = (new Definition())
             ->setPublic(true)
-            ->setArgument('$cronJobs', $containerBuilder->findTaggedServiceIds('plugin.cron_job'))
+            ->setAutowired(true)
             ->setArgument('$cronLogger', new Reference('logger.cron'));
         $containerBuilder->setDefinition(CronJobRunner::class, $definition);
-
-        $definition = (new Definition())
-            ->setArgument('$controllers', $this->getReferencesByTag('plugin.controller', $containerBuilder))
-            ->setArgument('$twig', new Reference(Environment::class));
-        $containerBuilder->setDefinition(ControllerExecutor::class, $definition);
-
-        $definition = (new Definition())
-            ->setAutowired(true)
-            ->setArgument('$extensions', $this->getReferencesByTag('twig.extension', $containerBuilder));
-        $containerBuilder->setDefinition(TwigEnvironmentFactory::class, $definition);
-    }
-
-    /**
-     * @param string           $tagName
-     * @param ContainerBuilder $containerBuilder
-     *
-     * @return array
-     */
-    private function getReferencesByTag(string $tagName, ContainerBuilder $containerBuilder)
-    {
-        return array_map(function ($serviceId) {
-            return new Reference($serviceId);
-        }, $containerBuilder->findTaggedServiceIds($tagName));
     }
 }
