@@ -61,11 +61,24 @@ class ServiceDefinitionLoader
         $containerBuilder->setDefinition(CronJobRunner::class, $definition);
 
         $definition = (new Definition())
-            ->setArgument('$controllers', $containerBuilder->findTaggedServiceIds('plugin.controller'));
+            ->setArgument('$controllers', $this->getReferencesByTag('plugin.controller', $containerBuilder));
         $containerBuilder->setDefinition(ControllerExecutor::class, $definition);
 
         $definition = (new Definition())
-            ->setArgument('$extensions', $containerBuilder->findTaggedServiceIds('twig.extension'));
+            ->setArgument('$extensions', $this->getReferencesByTag('twig.extension', $containerBuilder));
         $containerBuilder->setDefinition(TwigEnvironmentFactory::class, $definition);
+    }
+
+    /**
+     * @param string           $tagName
+     * @param ContainerBuilder $containerBuilder
+     *
+     * @return array
+     */
+    private function getReferencesByTag(string $tagName, ContainerBuilder $containerBuilder)
+    {
+        return array_map(function ($serviceId) {
+            return new Reference($serviceId);
+        }, $containerBuilder->findTaggedServiceIds($tagName));
     }
 }
