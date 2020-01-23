@@ -1,4 +1,14 @@
 services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+    bind:
+      $pluginDirectory: '%plugin.directory%'
+      $pluginName: '%plugin.name%'
+      $cronLogger: '@logger.cron'
+      $rootPath: '%runtime.root_dir%'
+      
   _instanceof:
     LoxBerryPoppins\Cron\CronJobInterface:
       tags: ['plugin.cron_job']
