@@ -8,10 +8,10 @@ services:
       tags: ['twig.extension']
 
   LoxBerryPoppins\:
-    resource: '../vendor/moay/loxberry-poppins/src/*'
+    resource: '../src/*'
 
   LoxBerry\:
-    resource: '../vendor/moay/loxberry-core/src/*'
+    resource: '../../loxberry-core/src/*'
 
   LoxBerryPoppins\Cron\CronJobRunner:
     public: true
