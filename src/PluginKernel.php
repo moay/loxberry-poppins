@@ -7,6 +7,7 @@ use LoxBerry\Logging\Logger;
 use LoxBerry\System\LowLevelExecutor;
 use LoxBerry\System\PathProvider;
 use LoxBerry\System\Plugin\PluginDatabase;
+use LoxBerryPoppins\DependencyInjection\CompilerPass\PluginParameterAutoBinderCompilerPass;
 use LoxBerryPoppins\DependencyInjection\CompilerPass\ServiceTaggerCompilerPass;
 use LoxBerryPoppins\DependencyInjection\Loader\PluginParameterLoader;
 use LoxBerryPoppins\DependencyInjection\Loader\ServiceDefinitionLoader;
@@ -45,6 +46,7 @@ class PluginKernel
     {
         $containerBuilder = new ContainerBuilder();
         $containerBuilder->addCompilerPass(new ServiceTaggerCompilerPass());
+        $containerBuilder->addCompilerPass(new PluginParameterAutoBinderCompilerPass());
 
         $pluginParameterLoader = new PluginParameterLoader(
             $this->pluginRootDirectory.self::ORIGINAL_PLUGIN_CONFIGURATION,
