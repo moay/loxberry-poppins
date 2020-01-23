@@ -46,21 +46,21 @@ class ServiceDefinitionLoader
         $definition = (new Definition())
             ->setAutowired(true)
             ->setAutoconfigured(true)
-            ->setFactory([new Reference(LogFileDatabaseFactory::class)]);
+            ->setFactory([new Reference(LogFileDatabaseFactory::class), '__invoke']);
         $containerBuilder->setDefinition(LogFileDatabase::class, $definition);
 
         $definition = (new Definition())
             ->setClass(Environment::class)
             ->setAutowired(true)
             ->setAutoconfigured(true)
-            ->setFactory([new Reference(TwigEnvironmentFactory::class)]);
+            ->setFactory([new Reference(TwigEnvironmentFactory::class), '__invoke']);
         $containerBuilder->setDefinition(Environment::class, $definition);
 
         $definition = (new Definition())
             ->setClass(Logger::class)
             ->setAutowired(true)
             ->setAutoconfigured(true)
-            ->setFactory([new Reference(CronLoggerFactory::class)]);
+            ->setFactory([new Reference(CronLoggerFactory::class), '__invoke']);
         $containerBuilder->setDefinition('logger.cron', $definition);
 
         $definition = (new Definition())
