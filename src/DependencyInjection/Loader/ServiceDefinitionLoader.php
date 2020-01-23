@@ -35,11 +35,8 @@ class ServiceDefinitionLoader
 
     public function registerServiceDefinitions(ContainerBuilder $containerBuilder)
     {
-        $definitionsToAdd = [];
-
-        $definition = (new Definition())
-            ->setClass(PageRouter::class)
-            ->setPublic(true);
+        $definition = $containerBuilder->getDefinition(PageRouter::class);
+        $definition->setPublic(true);
         $containerBuilder->setDefinition(PageRouterInterface::class, $definition);
 
         $definition = (new Definition())
