@@ -52,11 +52,11 @@ class PluginKernel
         );
         $pluginParameterLoader->loadPluginParameters($containerBuilder);
 
-        $serviceDefinitionLoader = new ServiceDefinitionLoader($this->pluginRootDirectory);
-        $serviceDefinitionLoader->registerServiceDefinitions($containerBuilder);
-
         $pluginLoader = new YamlFileLoader($containerBuilder, new FileLocator($this->pluginRootDirectory.self::CONFIG_DIRECTORY));
         $pluginLoader->load(self::PLUGIN_SERVICES_CONFIGURATION);
+
+        $serviceDefinitionLoader = new ServiceDefinitionLoader($this->pluginRootDirectory);
+        $serviceDefinitionLoader->registerServiceDefinitions($containerBuilder);
 
         $containerBuilder->compile();
 
