@@ -7,10 +7,10 @@ use LoxBerry\Logging\Logger;
 use LoxBerry\System\LowLevelExecutor;
 use LoxBerry\System\PathProvider;
 use LoxBerry\System\Plugin\PluginDatabase;
-use LoxBerryPoppins\DependencyInjection\Extension\ServiceDefinitionDefaultsExtension;
+use LoxBerryPoppins\DependencyInjection\CompilerPass\ServiceTaggerCompilerPass;
 use LoxBerryPoppins\DependencyInjection\Loader\PluginParameterLoader;
+use LoxBerryPoppins\DependencyInjection\Loader\ServiceDefinitionLoader;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Compiler\MergeExtensionConfigurationPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
@@ -44,7 +44,7 @@ class PluginKernel
     private function loadContainer()
     {
         $containerBuilder = new ContainerBuilder();
-        $containerBuilder->addCompilerPass(new MergeExtensionConfigurationPass());
+        $containerBuilder->addCompilerPass(new ServiceTaggerCompilerPass());
 
         $pluginParameterLoader = new PluginParameterLoader(
             $this->pluginRootDirectory.self::ORIGINAL_PLUGIN_CONFIGURATION,
@@ -52,7 +52,8 @@ class PluginKernel
         );
         $pluginParameterLoader->loadPluginParameters($containerBuilder);
 
-        $containerBuilder->registerExtension(new ServiceDefinitionDefaultsExtension());
+        $serviceDefinitionLoader = new ServiceDefinitionLoader($this->pluginRootDirectory);
+        $serviceDefinitionLoader->registerServiceDefinitions($containerBuilder);
 
         $pluginLoader = new YamlFileLoader($containerBuilder, new FileLocator($this->pluginRootDirectory.self::CONFIG_DIRECTORY));
         $pluginLoader->load(self::PLUGIN_SERVICES_CONFIGURATION);
