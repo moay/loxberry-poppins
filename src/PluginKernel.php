@@ -7,13 +7,8 @@ use LoxBerry\Logging\Logger;
 use LoxBerry\System\LowLevelExecutor;
 use LoxBerry\System\PathProvider;
 use LoxBerry\System\Plugin\PluginDatabase;
-use LoxBerryPoppins\DependencyInjection\CompilerPass\PluginParameterAutoBinderCompilerPass;
-use LoxBerryPoppins\DependencyInjection\CompilerPass\ServiceTaggerCompilerPass;
-use LoxBerryPoppins\DependencyInjection\CompilerPass\TagAutoBinderCompilerPass;
 use LoxBerryPoppins\DependencyInjection\Loader\PluginParameterLoader;
-use LoxBerryPoppins\DependencyInjection\Loader\ServiceDefinitionLoader;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
@@ -47,9 +42,6 @@ class PluginKernel
     private function loadContainer()
     {
         $containerBuilder = new ContainerBuilder();
-//        $containerBuilder->addCompilerPass(new ServiceTaggerCompilerPass());
-//        $containerBuilder->addCompilerPass(new PluginParameterAutoBinderCompilerPass(), PassConfig::TYPE_OPTIMIZE);
-//        $containerBuilder->addCompilerPass(new TagAutoBinderCompilerPass(), PassConfig::TYPE_OPTIMIZE);
 
         $pluginParameterLoader = new PluginParameterLoader(
             $this->pluginRootDirectory.self::ORIGINAL_PLUGIN_CONFIGURATION,
@@ -59,9 +51,6 @@ class PluginKernel
 
         $pluginLoader = new YamlFileLoader($containerBuilder, new FileLocator($this->pluginRootDirectory.self::CONFIG_DIRECTORY));
         $pluginLoader->load(self::PLUGIN_SERVICES_CONFIGURATION);
-
-//        $serviceDefinitionLoader = new ServiceDefinitionLoader($this->pluginRootDirectory);
-//        $serviceDefinitionLoader->registerServiceDefinitions($containerBuilder);
 
         $containerBuilder->compile();
 
