@@ -29,8 +29,8 @@ class SettingsStorage
     }
 
     /**
-     * @param string $key
-     * @param null   $default
+     * @param string     $key
+     * @param mixed|null $default
      *
      * @return mixed|null
      */
@@ -55,5 +55,34 @@ class SettingsStorage
     {
         $this->settings[$key] = $value;
         $this->pluginStorage->store(self::STORAGE_KEY, json_encode($this->settings));
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return mixed|null
+     */
+    public function __get(string $key)
+    {
+        return $this->get($key);
+    }
+
+    /**
+     * @param string $key
+     * @param $value
+     */
+    public function __set(string $key, $value)
+    {
+        $this->set($key, $value);
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function __isset(string $key)
+    {
+        return $this->has($key);
     }
 }
