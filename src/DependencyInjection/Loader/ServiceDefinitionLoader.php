@@ -37,37 +37,44 @@ class ServiceDefinitionLoader
     {
         $definitionsToAdd = [];
 
-        $definition = new Definition(PageRouterInterface::class);
-        $definition->setClass(PageRouter::class);
-        $definition->setPublic(true);
+        $definition = (new Definition())
+            ->setClass(PageRouter::class)
+            ->setPublic(true);
         $definitionsToAdd[] = $definition;
+        $containerBuilder->setDefinition(PageRouterInterface::class, $definition);
 
-        $definition = new Definition(LogFileDatabase::class);
-        $definition->setFactory('@'.LogFileDatabaseFactory::class);
+        $definition = (new Definition())
+            ->setFactory('@'.LogFileDatabaseFactory::class);
         $definitionsToAdd[] = $definition;
+        $containerBuilder->setDefinition(LogFileDatabase::class, $definition);
 
-        $definition = new Definition(Environment::class);
-        $definition->setClass(Environment::class);
-        $definition->setFactory('@'.TwigEnvironmentFactory::class);
+        $definition = (new Definition())
+            ->setClass(Environment::class)
+            ->setFactory('@'.TwigEnvironmentFactory::class);
         $definitionsToAdd[] = $definition;
+        $containerBuilder->setDefinition(Environment::class, $definition);
 
-        $definition = new Definition('logger.cron');
-        $definition->setClass(Logger::class);
-        $definition->setFactory('@'.CronLoggerFactory::class);
+        $definition = (new Definition())
+            ->setClass(Logger::class)
+            ->setFactory('@'.CronLoggerFactory::class);
         $definitionsToAdd[] = $definition;
+        $containerBuilder->setDefinition('logger.cron', $definition);
 
-        $definition = new Definition(CronJobRunner::class);
-        $definition->setPublic(true);
-        $definition->setArgument('$cronJobs', $containerBuilder->findTaggedServiceIds('plugin.cron_job'));
+        $definition = (new Definition())
+            ->setPublic(true)
+            ->setArgument('$cronJobs', $containerBuilder->findTaggedServiceIds('plugin.cron_job'));
         $definitionsToAdd[] = $definition;
+        $containerBuilder->setDefinition(CronJobRunner::class, $definition);
 
-        $definition = new Definition(ControllerExecutor::class);
-        $definition->setArgument('$controllers', $containerBuilder->findTaggedServiceIds('plugin.controller'));
+        $definition = (new Definition())
+            ->setArgument('$controllers', $containerBuilder->findTaggedServiceIds('plugin.controller'));
         $definitionsToAdd[] = $definition;
+        $containerBuilder->setDefinition(ControllerExecutor::class, $definition);
 
-        $definition = new Definition(TwigEnvironmentFactory::class);
-        $definition->setArgument('$extensions', $containerBuilder->findTaggedServiceIds('twig.extension'));
+        $definition = (new Definition())
+            ->setArgument('$extensions', $containerBuilder->findTaggedServiceIds('twig.extension'));
         $definitionsToAdd[] = $definition;
+        $containerBuilder->setDefinition(TwigEnvironmentFactory::class, $definition);
 
         $containerBuilder->addDefinitions($definitionsToAdd);
     }
