@@ -42,7 +42,6 @@ class ServiceDefinitionLoader
         $definition = $containerBuilder->getDefinition(PageRouter::class);
         $definition->setPublic(true);
         $containerBuilder->setDefinition(PageRouterInterface::class, $definition);
-
         $definition = (new Definition())
             ->setFactory([new Reference(LogFileDatabaseFactory::class)]);
         $containerBuilder->setDefinition(LogFileDatabase::class, $definition);
@@ -64,10 +63,12 @@ class ServiceDefinitionLoader
         $containerBuilder->setDefinition(CronJobRunner::class, $definition);
 
         $definition = (new Definition())
-            ->setArgument('$controllers', $this->getReferencesByTag('plugin.controller', $containerBuilder));
+            ->setArgument('$controllers', $this->getReferencesByTag('plugin.controller', $containerBuilder))
+            ->setArgument('$twig', new Reference(Environment::class));
         $containerBuilder->setDefinition(ControllerExecutor::class, $definition);
 
         $definition = (new Definition())
+            ->setAutowired(true)
             ->setArgument('$extensions', $this->getReferencesByTag('twig.extension', $containerBuilder));
         $containerBuilder->setDefinition(TwigEnvironmentFactory::class, $definition);
     }

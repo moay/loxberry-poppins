@@ -43,7 +43,7 @@ class TwigEnvironmentFactory
      */
     public function __construct(
         iterable $extensions,
-        string $rootPath,
+        $rootPath,
         $pluginName,
         PluginDatabase $pluginDatabase,
         MiniserverInformation $miniserverInformation
