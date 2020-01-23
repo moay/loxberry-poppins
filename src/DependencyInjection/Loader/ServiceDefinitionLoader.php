@@ -38,27 +38,35 @@ class ServiceDefinitionLoader
      */
     public function registerServiceDefinitions(ContainerBuilder $containerBuilder)
     {
-        $definition = $containerBuilder->getDefinition(PageRouter::class);
-        $definition->setPublic(true);
+        $definition = $containerBuilder
+            ->getDefinition(PageRouter::class)
+            ->setPublic(true);
         $containerBuilder->setDefinition(PageRouterInterface::class, $definition);
 
         $definition = (new Definition())
+            ->setAutowired(true)
+            ->setAutoconfigured(true)
             ->setFactory([new Reference(LogFileDatabaseFactory::class)]);
         $containerBuilder->setDefinition(LogFileDatabase::class, $definition);
 
         $definition = (new Definition())
             ->setClass(Environment::class)
+            ->setAutowired(true)
+            ->setAutoconfigured(true)
             ->setFactory([new Reference(TwigEnvironmentFactory::class)]);
         $containerBuilder->setDefinition(Environment::class, $definition);
 
         $definition = (new Definition())
             ->setClass(Logger::class)
+            ->setAutowired(true)
+            ->setAutoconfigured(true)
             ->setFactory([new Reference(CronLoggerFactory::class)]);
         $containerBuilder->setDefinition('logger.cron', $definition);
 
         $definition = (new Definition())
             ->setPublic(true)
             ->setAutowired(true)
+            ->setAutoconfigured(true)
             ->setArgument('$cronLogger', new Reference('logger.cron'));
         $containerBuilder->setDefinition(CronJobRunner::class, $definition);
     }
