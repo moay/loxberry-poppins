@@ -2,7 +2,7 @@
 
 # LoxBerry Poppins - Core
 
-[![Build Status](https://travis-ci.com/moay/loxberry-poppins.svg?branch=master)](https://travis-ci.com/moay/loxberry-poppins)
+[![Build Status](https://travis-ci.org/moay/loxberry-poppins.svg?branch=master)](https://travis-ci.org/moay/loxberry-poppins)
 
 This package is the core of LoxBerry Poppins. It should be used via 
 [the base plugin](https://github.com/moay/loxberry-poppins-base-plugin), but feel free to use it anywhere
@@ -14,7 +14,10 @@ For documentation, take a look at [the base plugin](https://github.com/moay/loxb
 
 ### Installation
 
-If you really want to use only this package, you can install it in your project via composer.
+Usage with [the base plugin](https://github.com/moay/loxberry-poppins-base-plugin) is strongly encouraged. Installation
+instructions can be found there.
+
+If you really want to use only this package, you can install it in your project using composer.
 
 ```
 composer require moax/loxberry-poppins
