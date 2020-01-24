@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "67a4f606ae2d4fa6f9439e123cc95ec3",
+    "content-hash": "9877eeecd2dde0817d46eae9b63562bd",
     "packages": [
         {
             "name": "catfan/medoo",
@@ -170,16 +170,16 @@
         },
         {
             "name": "moay/loxberry-core",
-            "version": "1.0.0-rc2",
+            "version": "1.0.0-rc3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moay/loxberry-php-core.git",
-                "reference": "504104d9938fca74a4aaecd6148e9a187dc1d18e"
+                "reference": "85a8d3028ab1f07daf60b92c724a1d4233e47a24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moay/loxberry-php-core/zipball/504104d9938fca74a4aaecd6148e9a187dc1d18e",
-                "reference": "504104d9938fca74a4aaecd6148e9a187dc1d18e",
+                "url": "https://api.github.com/repos/moay/loxberry-php-core/zipball/85a8d3028ab1f07daf60b92c724a1d4233e47a24",
+                "reference": "85a8d3028ab1f07daf60b92c724a1d4233e47a24",
                 "shasum": ""
             },
             "require": {
@@ -193,7 +193,6 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.15",
                 "php-coveralls/php-coveralls": "^2.1",
-                "phpro/grumphp": "^0.15.2",
                 "phpunit/phpunit": "^8.3"
             },
             "type": "library",
@@ -214,7 +213,7 @@
                 }
             ],
             "description": "The LoxBerry system library for PHP interactions",
-            "time": "2020-01-24T12:58:57+00:00"
+            "time": "2020-01-24T13:44:24+00:00"
         },
         {
             "name": "psr/container",
