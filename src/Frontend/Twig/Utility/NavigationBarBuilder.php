@@ -5,6 +5,7 @@ namespace LoxBerryPoppins\Frontend\Twig\Utility;
 use LoxBerryPoppins\Frontend\Navigation\NavigationConfigurationParser;
 use LoxBerryPoppins\Frontend\Navigation\UrlBuilder;
 use LoxBerryPoppins\Frontend\Routing\RouteMatcher;
+use LoxBerryPoppins\Frontend\Twig\Extensions\Translations;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -21,22 +22,28 @@ class NavigationBarBuilder
     /** @var UrlBuilder */
     private $urlBuilder;
 
+    /** @var Translations */
+    private $translations;
+
     /**
      * NavigationBarBuilder constructor.
      *
      * @param NavigationConfigurationParser $navigationConfigurationParser
      * @param RouteMatcher                  $routeMatcher
      * @param UrlBuilder                    $urlBuilder
+     * @param Translations                  $translations
      */
     public function __construct(
         NavigationConfigurationParser $navigationConfigurationParser,
         RouteMatcher $routeMatcher,
-        UrlBuilder $urlBuilder
+        UrlBuilder $urlBuilder,
+        Translations $translations
     ) {
         $this->navigationConfiguration = $navigationConfigurationParser->getConfiguration();
         $this->request = Request::createFromGlobals();
         $this->routeMatcher = $routeMatcher;
         $this->urlBuilder = $urlBuilder;
+        $this->translations = $translations;
     }
 
     /**
@@ -60,7 +67,7 @@ class NavigationBarBuilder
                 array_key_exists('target', $navigationItem) ? 'target="'.$navigationItem['target'].'"' : '',
                 $this->routeMatcher->isCurrentMatchedRoute($navigationItem['route'], false) ?
                     'class="ui-btn-active"' : '',
-                $navigationItem['title'] ?? $index
+                $this->translations->translate($navigationItem['title'] ?? $index)
             );
         }
         $navigationBar .= '</ul></div>';
