@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "998ff6f4d4d96bde9258651b01a965ba",
+    "content-hash": "112e5145e388e4da098a0bf60c70e6c5",
     "packages": [
         {
             "name": "catfan/medoo",
@@ -261,16 +261,16 @@
         },
         {
             "name": "moay/loxberry-core",
-            "version": "dev-master",
+            "version": "1.0.0-rc1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moay/loxberry-php-core.git",
-                "reference": "e656a83d61ce9d75f3ac0b9ce7bec213886a52f8"
+                "reference": "207503565ab213757877f4205b19960ff3065bd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moay/loxberry-php-core/zipball/e656a83d61ce9d75f3ac0b9ce7bec213886a52f8",
-                "reference": "e656a83d61ce9d75f3ac0b9ce7bec213886a52f8",
+                "url": "https://api.github.com/repos/moay/loxberry-php-core/zipball/207503565ab213757877f4205b19960ff3065bd0",
+                "reference": "207503565ab213757877f4205b19960ff3065bd0",
                 "shasum": ""
             },
             "require": {
@@ -305,7 +305,7 @@
                 }
             ],
             "description": "The LoxBerry system library for PHP interactions",
-            "time": "2020-01-22T13:51:48+00:00"
+            "time": "2020-01-24T11:35:48+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -4287,7 +4287,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "pear/config_lite": 20,
-        "moay/loxberry-core": 20
+        "moay/loxberry-core": 5
     },
     "prefer-stable": false,
     "prefer-lowest": false,
