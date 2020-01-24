@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "112e5145e388e4da098a0bf60c70e6c5",
+    "content-hash": "95bf67a68cbd15f51c34e82ad08cafb5",
     "packages": [
         {
             "name": "catfan/medoo",
@@ -260,17 +260,58 @@
             "time": "2019-12-08T12:42:25+00:00"
         },
         {
-            "name": "moay/loxberry-core",
-            "version": "1.0.0-rc1",
+            "name": "moay/config_lite",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/moay/loxberry-php-core.git",
-                "reference": "207503565ab213757877f4205b19960ff3065bd0"
+                "url": "https://github.com/moay/Config_Lite.git",
+                "reference": "68b3260624d40bc2e023046317016d095e454e9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moay/loxberry-php-core/zipball/207503565ab213757877f4205b19960ff3065bd0",
-                "reference": "207503565ab213757877f4205b19960ff3065bd0",
+                "url": "https://api.github.com/repos/moay/Config_Lite/zipball/68b3260624d40bc2e023046317016d095e454e9e",
+                "reference": "68b3260624d40bc2e023046317016d095e454e9e",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "PHP-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Patrick C. Engel",
+                    "email": "pce@php.net",
+                    "role": "Lead"
+                }
+            ],
+            "description": "Lightweight package for ini style configuration/settings text files",
+            "homepage": "http://pear.php.net/package/Config_Lite",
+            "time": "2020-01-24T12:52:45+00:00"
+        },
+        {
+            "name": "moay/loxberry-core",
+            "version": "1.0.0-rc2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/moay/loxberry-php-core.git",
+                "reference": "504104d9938fca74a4aaecd6148e9a187dc1d18e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/moay/loxberry-php-core/zipball/504104d9938fca74a4aaecd6148e9a187dc1d18e",
+                "reference": "504104d9938fca74a4aaecd6148e9a187dc1d18e",
                 "shasum": ""
             },
             "require": {
@@ -278,7 +319,7 @@
                 "ext-json": "*",
                 "ext-posix": "*",
                 "ext-sockets": "*",
-                "pear/config_lite": "dev-master",
+                "moay/config_lite": "^1.0",
                 "php": ">=7.2"
             },
             "require-dev": {
@@ -305,7 +346,7 @@
                 }
             ],
             "description": "The LoxBerry system library for PHP interactions",
-            "time": "2020-01-24T11:35:48+00:00"
+            "time": "2020-01-24T12:58:57+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -387,47 +428,6 @@
                 "psr-3"
             ],
             "time": "2019-12-20T14:22:59+00:00"
-        },
-        {
-            "name": "pear/config_lite",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pear/Config_Lite.git",
-                "reference": "d30be1729a56fd6691b90d99033a32ce01192950"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pear/Config_Lite/zipball/d30be1729a56fd6691b90d99033a32ce01192950",
-                "reference": "d30be1729a56fd6691b90d99033a32ce01192950",
-                "shasum": ""
-            },
-            "require-dev": {
-                "phpunit/phpunit": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "": "./"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "include-path": [
-                "./"
-            ],
-            "license": [
-                "PHP-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Patrick C. Engel",
-                    "email": "pce@php.net",
-                    "role": "Lead"
-                }
-            ],
-            "description": "Lightweight package for ini style configuration/settings text files",
-            "homepage": "http://pear.php.net/package/Config_Lite",
-            "time": "2017-07-04T10:28:32+00:00"
         },
         {
             "name": "phpro/grumphp",
@@ -4286,7 +4286,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "pear/config_lite": 20,
         "moay/loxberry-core": 5
     },
     "prefer-stable": false,

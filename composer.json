@@ -11,8 +11,7 @@
     ],
     "require": {
         "php": ">=7.2",
-        "pear/config_lite": "dev-master",
-        "moay/loxberry-core": "1.0.0-rc1",
+        "moay/loxberry-core": "1.0.0-rc2",
         "symfony/yaml": "^5.0",
         "symfony/config": "^5.0",
         "symfony/dependency-injection": "^5.0",
