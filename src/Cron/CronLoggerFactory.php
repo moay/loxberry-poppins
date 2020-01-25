@@ -48,7 +48,7 @@ class CronLoggerFactory
         $logFileDirectory = $this->pathProvider->getPath(Paths::PATH_PLUGIN_LOG);
 
         return $this->loggerFactory->__invoke(
-            self::LOG_NAME,
+            $this->pluginName.' - '.self::LOG_NAME,
             $this->pluginName,
             $logFileDirectory.'/'.date('Ymd-His_').'cron.log'
         );
